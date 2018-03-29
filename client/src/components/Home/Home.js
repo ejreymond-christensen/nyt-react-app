@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import API from "../../utils/API";
 import { Input, FormBtn } from "../../components/Form";
+import {Searchresult} from "../../components/Searchresult";
+
 class Home extends Component {
 
   state = {
@@ -31,7 +33,6 @@ class Home extends Component {
         .then(res =>
           this.setState({ articles: res.data.response.docs })
         )
-        // .then(res => this.loadArticles(res));
         .catch(err => console.log(err));
     }
   };
@@ -89,31 +90,18 @@ class Home extends Component {
               <div className="card">
                 <h5 className="card-header">Search Results</h5>
                 <div className="card-body">
-
-                  <div className="row searchResult">
-                    <div className="col-md-12">
-                      <div className="card">
-                        <div className="card-body">
-                          <h5 className="card-title">Card title</h5>
-                          <h6 className="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                          <button type="button" className="btn btn-outline-success float-right">Save</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="row searchResult">
-                    <div className="col-md-12">
-                      <div className="card">
-                        <div className="card-body">
-                          <h5 className="card-title">Card title</h5>
-                          <h6 className="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                          <button type="button" className="btn btn-outline-success float-right">Save</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
+                    {this.state.articles.map(article => {
+                      const date= article.pub_date.split("T")
+                      return (
+                        <Searchresult
+                          key={article.headline.main}
+                          title={article.headline.main}
+                          date={date[0]}
+                          url={article.web_url}
+                          snippet={article.snippet}
+                        />
+                      );
+                    })}
                 </div>
               </div>
             </div>
