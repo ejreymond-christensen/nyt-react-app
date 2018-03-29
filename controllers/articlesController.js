@@ -9,8 +9,6 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   save: function(req, res) {
-    console.log("Hola3")
-    console.log(req);
     db.Articles
       .create(req.body)
       .then(dbModel => res.json(dbModel))

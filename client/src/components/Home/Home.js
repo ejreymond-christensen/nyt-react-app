@@ -39,8 +39,6 @@ class Home extends Component {
   };
 
   saveArticle = event =>{
-    console.log("Hola")
-    console.log(event);
     API.save({
     title: event[0],
     url: event[2],
@@ -62,7 +60,7 @@ class Home extends Component {
           <div className="row searchWindow">
             <div className="col-md-12">
               <div className="card">
-                <h5 className="card-header">Search</h5>
+                <h5 className="card-header text-white bg-dark">Search</h5>
                 <div className="card-body">
                   <form>
                     <Input
@@ -105,8 +103,10 @@ class Home extends Component {
           <div className="row resultsWindow">
             <div className="col-md-12">
               <div className="card">
-                <h5 className="card-header">Search Results</h5>
+                <h5 className="card-header text-white bg-dark">Search Results</h5>
                 <div className="card-body">
+                  {this.state.articles.length ? (
+                    <div>
                     {this.state.articles.map(article => {
                       const date= article.pub_date.split("T")
                       return (
@@ -120,6 +120,10 @@ class Home extends Component {
                         />
                       );
                     })}
+                  </div>
+                  ) : (
+                      <h3>No Results to Display</h3>
+                    )}
                 </div>
               </div>
             </div>

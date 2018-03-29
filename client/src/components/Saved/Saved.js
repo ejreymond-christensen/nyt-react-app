@@ -8,17 +8,23 @@ class Saved extends Component {
     articles: [],
   };
 
-  // componentDidMount() {
-  //   this.loadArticles();
-  // }
-  //
-  // loadArticles = () => {
-  //   API.findAll()
-  //     .then(res =>
-  //       this.setState({ articles: res.data })
-  //     )
-  //     .catch(err => console.log(err));
-  // };
+  componentDidMount() {
+    this.loadArticles();
+  }
+
+  loadArticles = () => {
+    API.findAll()
+      .then(res =>
+        this.setState({ articles: res.data })
+      )
+      .catch(err => console.log(err));
+  };
+
+  deleteArticle =(id) =>{
+    API.remove(id)
+    .then(res => this.loadArticles())
+    .catch(err => console.log(err));
+};
 
 
   render() {
@@ -30,20 +36,27 @@ class Saved extends Component {
           <div className="row resultsWindow">
             <div className="col-md-12">
               <div className="card">
-                <h5 className="card-header">Saved Articles</h5>
+                <h5 className="card-header text-white bg-dark">Saved Articles</h5>
                 <div className="card-body">
+                  {this.state.articles.length ? (
+                    <div>
                   {this.state.articles.map(article => {
+                    const date= article.date.split("T")
                     return (
                       <Savedcard
-                        id={article.id}
+                        id={article._id}
                         title={article.title}
-                        date={article.date}
+                        date={date[0]}
                         url={article.url}
                         snippet={article.snippet}
-                        // onClick={() => this.deleteArticle(id)}
+                        onClick={() => this.deleteArticle(article._id)}
                       />
                     );
                   })}
+                </div>
+                ) : (
+                    <h3>No Results to Display</h3>
+                  )}
                 </div>
               </div>
             </div>

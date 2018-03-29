@@ -5,6 +5,8 @@ const articlesController = require("../../controllers/articlesController");
 router.route("/")
   .get(articlesController.findAll)
   .post(articlesController.save)
+
+router.route("/:id")
   .delete(articlesController.remove);
 
 
