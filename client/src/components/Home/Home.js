@@ -25,8 +25,9 @@ class Home extends Component {
     if (this.state.q && this.state.startDate && this.state.endDate) {
       API.searchArticles({
         "api-key": "985ea6ce339c4406a9745e2267215aac",
+        q: this.state.q,
         begin_date: this.state.startDate+"0101",
-        end_date: this.state.endDate+"0101",
+        end_date: this.state.endDate+"1229",
         sort: "newest",
         fl: "pub_date, web_url, headline, snippet"
       })
@@ -36,6 +37,22 @@ class Home extends Component {
         .catch(err => console.log(err));
     }
   };
+
+  saveArticle = event =>{
+    console.log("Hola")
+    console.log(event);
+    API.save({
+    title: event[0],
+    url: event[2],
+    snippet: event[3],
+    date: event[1]
+    })
+      .then(res => console.log("saved")
+      )
+      .catch(err => console.log(err));
+  };
+
+
   render() {
     return (
       <div>
@@ -99,6 +116,7 @@ class Home extends Component {
                           date={date[0]}
                           url={article.web_url}
                           snippet={article.snippet}
+                          onClick={() => this.saveArticle([article.headline.main, date[0], article.web_url, article.snippet])}
                         />
                       );
                     })}

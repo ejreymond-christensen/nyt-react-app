@@ -9,7 +9,7 @@ export const Searchresult = props =>
         <h6 className="card-subtitle mb-2 text-muted">{props.date}</h6>
         <p>{props.snippet}</p>
         <a href={props.url} target="_blank">View Article</a>
-        <button type="button" className="btn btn-outline-success float-right" >Save</button>
+        <button type="button" className="btn btn-outline-success float-right" {...props}>Save</button>
       </div>
     </div>
   </div>
